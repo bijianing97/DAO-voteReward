@@ -1,0 +1,12 @@
+type Voter @entity {
+  id: ID!
+  timestamp: BigInt!
+  voterInfo: [VoterInfo!]!
+}
+
+type VoterInfo @entity {
+  id: ID!
+  cost: BigInt!
+  timestamp: BigInt!
+  commissionAddress: Bytes!
+}

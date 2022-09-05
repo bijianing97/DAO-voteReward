@@ -1,0 +1,28 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: StakeManager
+    network: reimain
+    source:
+      address: '0x0000000000000000000000000000000000001001'
+      abi: StakeManager
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Voter
+        - VoterInfo
+      abis:
+        - name: StakeManager
+          file: ./abis/StakeManager.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Stake(indexed address,indexed uint256,address,uint256)
+          handler: handleStake
+        - event: StartUnstake(indexed uint256,indexed address,indexed uint256,address,uint256,uint256)
+          handler: handleStakeUnstake
+      file: ./src/VoteCost.ts
