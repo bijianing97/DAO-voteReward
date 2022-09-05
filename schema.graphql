@@ -8,5 +8,5 @@ type VoterInfo @entity {
   id: ID!
   cost: BigInt!
   timestamp: BigInt!
-  commissionAddress: Bytes!
+  commissionAddress: String!
 }
