@@ -4,7 +4,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: StakeManager
-    network: reitest
+    network: reidev1
     source:
       address: '0x0000000000000000000000000000000000001001'
       abi: StakeManager
