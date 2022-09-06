@@ -25,5 +25,5 @@ dataSources:
         - event: Stake(indexed address,indexed uint256,address,uint256)
           handler: handleStake
         - event: StartUnstake(indexed uint256,indexed address,indexed uint256,address,uint256,uint256)
-          handler: handleStakeUnstake
+          handler: handleStartUnstake
       file: ./src/VoteCost.ts
