@@ -8,5 +8,8 @@ type VoterInfo @entity {
   id: ID!
   cost: BigInt!
   timestamp: BigInt!
-  commissionAddress: Bytes!
+  commissionAddress: String!
+  balance: BigInt
+  sharesAmount: BigInt
+  costAmout: BigInt
 }
