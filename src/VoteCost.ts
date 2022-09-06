@@ -1,12 +1,12 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts'
-import { Voter, VoterInfo } from './types/schema'
+import { Voter, VoterInfo, unInfo } from './types/schema'
 import { stakemanager } from './utils/helper'
 import { ERC20 } from './types/StakeManager/ERC20'
 import { Stake, StartUnstake } from './types/StakeManager/StakeManager'
 
 export function handleStake(event: Stake): void {
   const voterID = event.params.to.toHex()
-  const voterInfoID = `${event.params.to.toHex()}-${event.params.validator.toHex()}`
+  const voterInfoID = `${event.params.to.toHex()}-${event.params.validator.toHex()}-add`
   let voter = Voter.load(voterID)
   if (voter) {
     let voterInfo = VoterInfo.load(voterInfoID)
@@ -39,23 +39,19 @@ export function handleStake(event: Stake): void {
 
 export function handleStartUnstake(event: StartUnstake): void {
   const voterID = event.transaction.from.toHex()
-  const voterInfoID = `${event.transaction.from.toHex()}-${event.params.validator.toHex()}`
-  const voter = Voter.load(voterID)
-  const voterInfo = VoterInfo.load(voterInfoID)
-  if (!voter || !voterInfo) {
-    return
-  }
-  const sharesAddress = voterInfo.commissionAddress
-  const shareContract = ERC20.bind(Address.fromString(sharesAddress))
-  const sharesAmount = shareContract.balanceOf(Address.fromString(voterID))
-  voterInfo.sharesAmount = sharesAmount
+  const voterInfoID = `${event.transaction.from.toHex()}-${event.params.validator.toHex()}-remove`
+  const voterInfoIDAdd = `${event.transaction.from.toHex()}-${event.params.validator.toHex()}-add`
+  // const voter = Voter.load(voterID)
+  const uninfo = new unInfo(voterInfoID)
+  const voterInfoAdd = VoterInfo.load(voterInfoIDAdd)
+  const sharesAddress = voterInfoAdd!.commissionAddress
 
-  if (sharesAmount.gt(BigInt.fromI32(0))) {
-    const shareToRei = stakemanager.estimateSharesToAmount(event.params.validator, sharesAmount)
-    voterInfo.balance = shareToRei
-    voterInfo.costAmout = voterInfo.cost.ge(shareToRei) ? sharesAmount : voterInfo.cost
-  } else {
-    voterInfo.costAmout = BigInt.fromI32(0)
-  }
-  voterInfo.save()
+  uninfo.timestamp = event.block.timestamp
+  uninfo.commissionAddress = sharesAddress
+  const balance = ERC20.bind(Address.fromString(sharesAddress)).balanceOf(Address.fromString(voterID))
+  uninfo.balance = balance
+  uninfo.sharesAmount = stakemanager.estimateSharesToAmount(event.params.validator, balance)
+  uninfo.costAmout = BigInt.fromI32(0)
+
+  uninfo.save()
 }

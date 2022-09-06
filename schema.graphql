@@ -9,7 +9,13 @@ type VoterInfo @entity {
   cost: BigInt!
   timestamp: BigInt!
   commissionAddress: String!
-  balance: BigInt
-  sharesAmount: BigInt
-  costAmout: BigInt
+}
+
+type unInfo @entity {
+  id: ID!
+  timestamp: BigInt!
+  commissionAddress: String!
+  balance: BigInt!
+  sharesAmount: BigInt!
+  costAmout: BigInt!
 }
