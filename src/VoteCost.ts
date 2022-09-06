@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
 import { Voter, VoterInfo } from './types/schema'
 import { stakemanager } from './utils/helper'
 import { ERC20 } from './types/StakeManager/ERC20'
