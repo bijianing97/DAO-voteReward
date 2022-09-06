@@ -10,12 +10,3 @@ type VoterInfo @entity {
   timestamp: BigInt!
   commissionAddress: String!
 }
-
-type unInfo @entity {
-  id: ID!
-  timestamp: BigInt!
-  commissionAddress: String!
-  balance: BigInt!
-  sharesAmount: BigInt!
-  costAmout: BigInt!
-}
