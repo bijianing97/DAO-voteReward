@@ -5,9 +5,9 @@
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ voteReward",
-    "create-local": "graph create --node http://localhost:8020/ voteReward",
-    "remove-local": "graph remove --node http://localhost:8020/ voteReward",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 voteReward"
+    "create-local": "graph create --node http://localhost:8777/ voteReward",
+    "remove-local": "graph remove --node http://localhost:8777/ voteReward",
+    "deploy-local": "graph deploy --node http://localhost:8777/ --ipfs http://localhost:5001 voteReward"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.25.1",
